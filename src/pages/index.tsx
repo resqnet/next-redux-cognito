@@ -1,11 +1,10 @@
-import React from "react";
+import Component from "@/templates/Index";
+import * as React from "react";
 
+// ______________________________________________________
+//
 const Index = () => {
-  return (
-    <div>
-      <h1>Sample Top</h1>
-    </div>
-  );
+  return <Component />;
 };
 
 export default Index;

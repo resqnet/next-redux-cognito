@@ -4,6 +4,10 @@ import AppInitializeProvider from "@/providers/AppInitializeProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 import { AppProps } from "next/app";
 import Head from "next/head";
+
+// ______________________________________________________
+//
+
 // ______________________________________________________
 //
 const Index = (props: AppProps) => {

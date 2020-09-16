@@ -3,6 +3,7 @@ import { ThunkAction as ReduxThunkAction } from "redux-thunk";
 import * as AppRequest from "./AppRequest";
 import * as AppRouter from "./AppRouter";
 import * as Counter from "./Counter";
+import * as Login from "./Login";
 // 【Add New Line】
 // ______________________________________________________
 //
@@ -10,6 +11,7 @@ export type StoreState = {
   AppRequest: AppRequest.State;
   AppRouter: AppRouter.State;
   Counter: Counter.State;
+  Login: Login.State;
   // 【Add New Line】
 };
 // ______________________________________________________
@@ -18,6 +20,7 @@ export type Action = InferActionType<
   | typeof AppRequest.actions
   | typeof AppRouter.actions
   | typeof Counter.actions
+  | typeof Login.actions
   // 【Add New Line】
 >;
 // ______________________________________________________
