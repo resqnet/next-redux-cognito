@@ -19,11 +19,26 @@ export const useHooks = (props: Props) => {
     dispatch(Login.thunks.confirm(username, verification));
   };
 
+  const isLogin = () => {
+    dispatch(Login.thunks.isLogin());
+  }
+
+  const signOut = () => {
+    dispatch(Login.thunks.signOut());
+  }
+
+  const authChalenge = (username: string ,code: string) => {
+    dispatch(Login.thunks.customAuthChallenge(username, code));
+  }
+
   return {
+    authChalenge,
     message,
+    isLogin,
     signIn,
     signUp,
-    signConfirm
+    signConfirm,
+    signOut
   };
 };
 

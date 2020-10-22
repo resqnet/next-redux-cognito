@@ -1,6 +1,5 @@
 import Layout from "@/layouts";
 import React from "react";
-import Amplify, { Auth } from "aws-amplify";
 import useHooks from "./hooks";
 
 // ______________________________________________________
@@ -8,12 +7,14 @@ import useHooks from "./hooks";
 
 // ______________________________________________________
 //
-export interface Props {}
+export interface Props {
+  otp?: string
+}
+
 // ______________________________________________________
 //
 export const Index: React.FC<Props> = (props) => {
   const hooks = useHooks(props);
-
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("")
   const [confirm, setComfirm] = React.useState("");
@@ -33,6 +34,25 @@ export const Index: React.FC<Props> = (props) => {
     e.preventDefault();
     hooks.signConfirm(username, confirm);
   };
+
+  const handleClickIsLogin = (e:React.MouseEvent) => {
+    e.preventDefault();
+    hooks.isLogin();
+  };
+
+  const handleClickLogout = (e:React.MouseEvent) => {
+    e.preventDefault();
+    hooks.signOut();
+  };
+
+  const handleClickOTP = (e: React.MouseEvent) => {
+    e.preventDefault();
+    hooks.authChalenge(username, confirm);
+  }
+
+  React.useEffect(() => {
+    hooks.isLogin();
+  }, []);
 
   return (
     <Layout>
@@ -54,7 +74,13 @@ export const Index: React.FC<Props> = (props) => {
             <br />
             <button onClick={handleClickSignIn}>Sign In</button>
             <button onClick={handleClickSignUp}>Sign Up</button>
+            <button onClick={handleClickLogout}>Sign Out</button>
+            <br/>
             <button onClick={handleClickConfirm}>VelificationCode</button>
+            <br/>
+            <button onClick={handleClickIsLogin}>IsLogin</button>
+            <br/>
+            <button onClick={handleClickOTP}>OTP</button>
           </form>
         </div>
       </>

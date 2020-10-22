@@ -4,7 +4,7 @@ import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
 // ______________________________________________________
 //
 export const actions = {
-  signIn: ca("Login/signin", (user:CognitoUser ) => ({
+  signIn: ca("Login/signin", (user:CognitoUser) => ({
     payload: { CognitoUser: user },
   })),
   signUp: ca("Login/signup", (user: ISignUpResult ) => ({
@@ -12,5 +12,11 @@ export const actions = {
   })),
   confirm: ca("Login/confirm", (user: ISignUpResult ) => ({
     payload: { CognitoUser: user },
+  })),
+  isLogin: ca("Login/islogin", (user: CognitoUser ) => ({
+    payload: { CognitoUser: user },
+  })),
+  signOut: ca("Login/signout", () => ({
+    payload: { },
   })),
 };

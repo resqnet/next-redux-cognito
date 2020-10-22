@@ -3,6 +3,7 @@ import { actions } from "./actions"
 import { ThunkAction } from "@/redux";
 import Amplify, { Auth } from "aws-amplify";
 import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
+import { resolve } from "dns";
 
 // ______________________________________________________
 //
@@ -21,9 +22,35 @@ Amplify.configure({
 //
 type LoginInfo = ThunkAction<{id: string , pass: string}>;
 type ConfirmInfo = ThunkAction<{verification: number}>;
+type LoginUser = ThunkAction<{cognitoUser: CognitoUser}>;
 // ______________________________________________________
 //
 export const thunks = {
+  isLogin: (): ThunkAction<LoginUser> => (dispatch) => {
+    return new Promise(()=>{
+      Auth.currentAuthenticatedUser().then((user: CognitoUser)=>{
+        dispatch(actions.isLogin(user));
+      });
+    });
+  },
+  signOut: (): ThunkAction<void> => (dispatch) => {
+    return new Promise(()=>{
+      Auth.signOut().then(()=>{
+        dispatch(actions.signOut());
+      });
+    });
+  },
+  customAuthChallenge: (id: string,code: string) : ThunkAction<CognitoUser> => (dispatch) => {
+    return new Promise((resolve)=> {
+      Auth.signIn(id).then((user: CognitoUser)=>{
+        Auth.sendCustomChallengeAnswer(user, code).then((user: CognitoUser)=>{
+          resolve(user);
+        }).catch((e) => {
+          console.log(e.message);
+        });
+      });
+    });
+  },
   signIn: (id: string, pass: string) : LoginInfo => (dispatch) => {
     return new Promise(()=>{
       Auth.signIn(id, pass)
